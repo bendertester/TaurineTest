@@ -1,6 +1,6 @@
 # Taurine
 
-iOS 14 untethered jailbreak.
+iOS 14 untethered jailbreak. I made this only using my iPhone and Github Actions that's why there is over 100 commits
 
 # Supported Devices
 
