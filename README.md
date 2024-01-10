@@ -4,7 +4,7 @@ iOS 14 untethered jailbreak.
 
 # Supported Devices
 
-All A8-A14 devices on iOS 14.0-14.7
+All A8-A14 devices on iOS 14.0 - 14.6
 
 # License
 
