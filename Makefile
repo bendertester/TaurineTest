@@ -12,7 +12,6 @@ all: clean
 	xcodebuild clean build CODE_SIGNING_ALLOWED=NO ONLY_ACTIVE_ARCH=NO PRODUCT_BUNDLE_IDENTIFIER="$(BUNDLE)" -sdk iphoneos -scheme Taurine -configuration Release -derivedDataPath build
 	ln -sf build/Build/Products/Release-iphoneos Payload
 	rm -rf Payload/Taurine.app/Frameworks
-	./ldid -Sentitlements.plist -Kdev_certificate.p12 -Upassword Payload/Taurine.app/Taurine
 	zip -r9 Taurine.ipa Payload/Taurine.app
 
 clean:
