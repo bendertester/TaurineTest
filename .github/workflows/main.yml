@@ -6,6 +6,14 @@ jobs:
     runs-on: macos-latest
     steps:
      - uses: actions/checkout@v3
+     - name: Import Certificate
+       run: |
+            sudo security create-keychain -p "password" code-signing.keychain-db
+            sudo security set-keychain-settings -lut 21600 code-signing.keychain-db
+            sudo security unlock-keychain -p "password" code-signing.keychain-db
+            sudo security import certificate.p12 -P "password" -A -t cert -f pkcs12 -k code-signing.keychain-db
+            sudo security list-keychain -d user -s code-signing.keychain-db
+            sudo security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "password" code-signing.keychain-db
      - name: Build App
        run: make all
      - name: Git Push
