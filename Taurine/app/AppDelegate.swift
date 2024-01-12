@@ -12,7 +12,6 @@ struct Main {
     static func main() {
         let args = CommandLine.arguments
         if args.count > 1 {
-            print(ExploitManager.shared.chosenExploit)
             if args[1] == "jailbreak" {
                 jailbreak()
             }
@@ -28,15 +27,35 @@ func jailbreak() {
     let generator = NonceManager.shared.currentValue
     var hasKernelRw = false
     var any_proc = UInt64(0)
-    sleep(5)
-    print("Selecting kfd [smith] for iOS 14.0 - 14.8.1")
-    LogStream.shared.pause()
-    let ret = do_kopen(0x800, 0x1, 0x2, 0x2)
-    LogStream.shared.resume()
-    if ret != 0 {
-        print("Successfully exploited kernel!");
-        any_proc = our_proc_kAddr
-        hasKernelRw = true
+    switch ExploitManager.shared.chosenExploit {
+       case .cicutaVirosa:
+            print("Selecting cicuta_virosa for iOS 14.0 - 14.3")
+            if cicuta_virosa() == 0 {
+                any_proc = our_proc_kAddr
+                hasKernelRw = true
+            }
+        case .kfdPhysPuppet:
+            print("Selecting kfd [physpuppet] for iOS 14.0 - 14.8.1")
+            LogStream.shared.pause()
+            let ret = do_kopen(0x800, 0x0, 0x2, 0x2)
+            LogStream.shared.resume()
+            if ret != 0 {
+                print("Successfully exploited kernel!");
+                any_proc = our_proc_kAddr
+                hasKernelRw = true
+            }
+        case .kfdSmith:
+            print("Selecting kfd [smith] for iOS 14.0 - 14.8.1")
+            LogStream.shared.pause()
+            let ret = do_kopen(0x800, 0x1, 0x2, 0x2)
+           LogStream.shared.resume()
+            if ret != 0 {
+                print("Successfully exploited kernel!");
+                any_proc = our_proc_kAddr
+                hasKernelRw = true
+            }
+        default:
+            fatalError("Unable to get kernel r/w")
     }
     guard hasKernelRw else {
         print("No kernel r/w!")
