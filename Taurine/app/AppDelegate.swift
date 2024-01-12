@@ -12,6 +12,7 @@ struct Main {
     static func main() {
         let args = CommandLine.arguments
         if args.count > 1 {
+            print(ExploitManager.shared.chosenExploit)
             if args[1] == "jailbreak" {
                 jailbreak()
             }
