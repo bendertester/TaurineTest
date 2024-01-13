@@ -14,7 +14,9 @@ struct Main {
         if args.count > 1 {
             print(ExploitManager.shared.chosenExploit)
             if args[1] == "jailbreak" {
-                jailbreak()
+                if FileManager.default.fileExists(atPath: "/var/mobile/.untether") {
+                    jailbreak()
+                }
             }
         } else {
             UIApplicationMain(CommandLine.argc, CommandLine.unsafeArgv, nil, NSStringFromClass(AppDelegate.self))
