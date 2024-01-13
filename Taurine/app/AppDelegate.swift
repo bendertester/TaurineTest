@@ -12,11 +12,7 @@ struct Main {
     static func main() {
         let args = CommandLine.arguments
         if args.count > 1 {
-            print(FileManager.default.fileExists(atPath: "/var/mobile/.untether"))
             print(ExploitManager.shared.chosenExploit)
-            if !FileManager.default.fileExists(atPath: "/var/mobile/.untether") {
-                print("Untether disabled")
-            }
             if args[1] == "jailbreak" {            
                 jailbreak()
             }
